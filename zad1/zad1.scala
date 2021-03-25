@@ -9,12 +9,12 @@ def joinWeekDaysFor(days: List[String]) : String = {
       } 
       return out
 }
-println("For: "+joinWeekDaysFor(weekDays))
+println("1.a. For: "+joinWeekDaysFor(weekDays))
 
 def joinWeekDaysThatStartWithPFor(days: List[String]) : String = {
       return joinWeekDaysFor(days.filter(d => d.startsWith("P") || d.startsWith("p")))
 }
-println("Starts with P: "+joinWeekDaysThatStartWithPFor(weekDays))
+println("1.b.Starts with P: "+joinWeekDaysThatStartWithPFor(weekDays))
 
 def joinWeekDaysWhile(days: List[String]) : String = {
       var out: String = ""
@@ -29,7 +29,7 @@ def joinWeekDaysWhile(days: List[String]) : String = {
       return out
 }
 
-println("While: "+joinWeekDaysWhile(weekDays))
+println("1.c.While: "+joinWeekDaysWhile(weekDays))
 
 
 def joinWeekDaysRec(days: List[String]): String = days match {
@@ -38,7 +38,7 @@ def joinWeekDaysRec(days: List[String]): String = days match {
     case Nil => ""
 }
 
-println("Recursive: "+joinWeekDaysRec(weekDays))
+println("2.a.Recursive: "+joinWeekDaysRec(weekDays))
 
 def joinWeekDaysRecReverse(days: List[String]): String = days match {
     case d :: Nil => d
@@ -46,7 +46,7 @@ def joinWeekDaysRecReverse(days: List[String]): String = days match {
     case Nil => ""
 }
 
-println("Reverse: "+joinWeekDaysRecReverse(weekDays))
+println("2.b.Reverse: "+joinWeekDaysRecReverse(weekDays))
 
 @annotation.tailrec
 def joinWeekDaysTailRec(days: List[String], out: String = ""): String = days match {
@@ -55,15 +55,15 @@ def joinWeekDaysTailRec(days: List[String], out: String = ""): String = days mat
     case List() => out
 }
 
-println("Tailrec: "+joinWeekDaysTailRec(weekDays))
+println("3.Tailrec: "+joinWeekDaysTailRec(weekDays))
 
 def foldLWeekDays(days: List[String]) = days.tail.foldLeft(days.head)((prev, curr) => prev+ ", " + curr)
 
-println("Fold Left: "+foldLWeekDays(weekDays))
+println("4.a.Fold Left: "+foldLWeekDays(weekDays))
 
 def foldRWeekDays(days: List[String]) = days.dropRight(1).foldRight(days.last)((a, b) => a + ", " + b)
 
-println("Fold Right: "+foldRWeekDays(weekDays))
+println("4.b.Fold Right: "+foldRWeekDays(weekDays))
 
 // Didn't know if filter is allowed
 // def foldLWeekDaysStartP(days: List[String]) = 
@@ -75,11 +75,24 @@ val filterAndConcat: (String, String) => String =
 def foldLWeekDaysStartP(days: List[String]) = 
   days.foldLeft("")(filterAndConcat)
 
-println("Fold Left and starts with P: "+foldLWeekDaysStartP(weekDays))
+println("4.c.Fold Left and starts with P: "+foldLWeekDaysStartP(weekDays))
 
 val products = Map("Chleb" -> 10.0, "Jogurt" -> 15.0, "Ser" -> 30.5)
 
 println("5.Products price reduced 10% " + products.map((pr) => pr._1 -> pr._2 * 0.9))
+
+def printValues(values: List[Any]) = values.foreach(print)
+print("6.")
+printValues(List("Value 1 ", 30, 40.7))
+println()
+
+def optionTest(hashMap: Map[String, String])= {
+  println(hashMap.get("PL").getOrElse("Not found"))
+  println(hashMap.get("DE").getOrElse("Not found"))
+}
+
+println("7.")
+optionTest(Map("PL" -> "Warsaw", "JP" -> "Tokyo"))
 
 def filterOutZeroes(ints: List[Int]): List[Int] = ints match {
   case d :: tail if d == 0 => filterOutZeroes(tail)

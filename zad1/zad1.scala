@@ -81,10 +81,11 @@ val products = Map("Chleb" -> 10.0, "Jogurt" -> 15.0, "Ser" -> 30.5)
 
 println("5.Products price reduced 10% " + products.map((pr) => pr._1 -> pr._2 * 0.9))
 
-def printValues(values: List[Any]) = values.foreach(print)
+def printValues(values: (String, Double, Int)) = {
+  println(s"${values._1}, ${values._2}, ${values._3}")
+}
 print("6.")
-printValues(List("Value 1 ", 30, 40.7))
-println()
+printValues(("Value 1 ", 40.7,30))
 
 def optionTest(hashMap: Map[String, String])= {
   println(hashMap.get("PL").getOrElse("Not found"))

@@ -1,10 +1,8 @@
-// 2. Łączną ilość środków pozostałych na kartach kredytowych osób w bazie, w podziale na waluty
+// 5. Średnia i łączna ilość środków na kartach kredytowych kobiet narodowości polskiej w podziale na waluty
 printjson(
   db.people.aggregate([
     {
-      $project: {
-        credit: 1
-      }
+      $match: { nationality: 'Poland', sex: 'Female' }
     },
     {
       $unwind: {
@@ -16,6 +14,9 @@ printjson(
         _id: '$credit.currency',
         total: {
           $sum: { "$convert": { 'input': '$credit.balance', 'to': 'double' } }
+        },
+        avarage: {
+          $avg: { "$convert": { 'input': '$credit.balance', 'to': 'double' } }
         }
       }
     }

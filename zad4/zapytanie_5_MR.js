@@ -1,20 +1,16 @@
 // 5. Średnia i łączna ilość środków na kartach kredytowych kobiet narodowości polskiej w podziale na waluty
 db.people.mapReduce(
   function () {
-    this.credit.forEach(cc => {
-      emit(cc.currency, Number(cc.balance));
-    });
+    if (this.nationality === "Poland" && this.sex == "Female") {
+      this.credit.forEach(cc => emit(cc.currency, { sumBalance: Number(cc.balance), count: 1 }))
+    }
   },
   function (key, values) {
-    const sumBalance = Array.sum(values);
-    const averageBalance = sumBalance / values.length;
-
-    return { sumBalance, averageBalance };
+    return { sumBalance: Array.sum(values.map(c => c.sumBalance)), count: values.length }
   },
   {
-    query: {
-      nationality: 'Poland',
-      sex: 'Female'
+    finalize: function(key, value) {
+      return {sumBalance: value.sumBalance, averageBalance: (value.sumBalance / value.count) }
     },
     out: 'balances'
   }

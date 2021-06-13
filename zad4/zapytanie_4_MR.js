@@ -1,25 +1,31 @@
 // 4. Średnie, minimalne i maksymalne BMI (waga/wzrost^2) dla osób w bazie, w podziale na narodowości
 db.people.mapReduce(
   function () {
-    emit(this.nationality, { weight: Number(this.weight), height: Number(this.height) });
+    let weight = Number(this.weight)
+    let heightInMeters = Number(this.height) / 100;
+    let bmi = (weight / (heightInMeters * heightInMeters))
+    emit(this.nationality, { lowestBmi: bmi, highestBmi: bmi, sumBmi: bmi, count: 1 });
   },
   function (key, values) {
-    let sumBmi = 0;
-    let heighestBmi = 0;
-    let lowestBmi = Infinity;
-
-    values.forEach(person => {
-      const heightInMeters = person.height / 100;
-      const bmi = person.weight / (heightInMeters * heightInMeters);
-
-      sumBmi += bmi;
-      if (bmi > heighestBmi) heighestBmi = bmi;
-      if (bmi < lowestBmi) lowestBmi = bmi;
-    });
-
-    return { averageBmi: sumBmi / values.length, heighestBmi, lowestBmi };
+    return values.reduce((a, b) => {
+      return {
+        lowestBmi: Math.min(a["lowestBmi"], b["lowestBmi"]),
+        highestBmi: Math.max(a["highestBmi"], b["highestBmi"]),
+        sumBmi: a["sumBmi"] + b["sumBmi"],
+        count: a["count"] + b["count"]
+      }
+    })
   },
-  { out: 'bmis_per_nationality' }
+  {
+    finalize: function (key, value) {
+      return { 
+        lowestBmi: value.lowestBmi,
+        highestBmi: value.highestBmi,
+        averageBmi: value.sumBmi / value.count
+      };
+    }, 
+    out: 'bmis_per_nationality'
+  }
 );
 
 printjson(db.bmis_per_nationality.find().toArray());

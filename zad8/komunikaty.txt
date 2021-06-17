@@ -1,0 +1,7 @@
+Zapisano w bazie klucz: abc,
+wartosc: {'nickname': 'abc', 'password': 'password1', 'age': 11, 'sex': False}
+Odczytany wpis w bazie:
+{'nickname': 'abc', 'password': 'password1', 'age': 11, 'sex': False}
+Odczytany wpis po aktualizacji:
+{'nickname': 'abc', 'password': 'password1', 'age': 11, 'sex': True}
+Proba odczytu usunietego wpisu: None

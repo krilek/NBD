@@ -1,0 +1,24 @@
+1.
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "abc", "password": "password1","age": 11, "sex": false}' http://localhost:8098/buckets/s23860/keys/abc >> wynik1.txt
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "def", "password": "password2","age": 12, "sex": true}' http://localhost:8098/buckets/s23860/keys/def >> wynik1.txt
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "ghi", "password": "password3","age": 13, "sex": true}' http://localhost:8098/buckets/s23860/keys/ghi >> wynik1.txt
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "jkl", "password": "password4","age": 14, "sex": false}' http://localhost:8098/buckets/s23860/keys/jkl >> wynik1.txt
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "mno", "password": "password5","age": 15, "sex": false}' http://localhost:8098/buckets/s23860/keys/mno >> wynik1.txt
+2.
+curl -i -XGET  http://localhost:8098/buckets/s23860/keys/abc >> wynik2.txt
+3.
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "abc", "password": "password1","age": 11, "sex": false, "catOwner": true}' http://localhost:8098/buckets/s23860/keys/abc
+4.
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "def", "password": "password2","age": 12}' http://localhost:8098/buckets/s23860/keys/def >> wynik4.txt
+5.
+curl -i -XPUT -H "Content-Type: application/json" -d '{"nickname": "mno", "password": "password5","age": 99, "sex": false}' http://localhost:8098/buckets/s23860/keys/mno >> wynik5.txt
+6.
+curl -i -XDELETE http://localhost:8098/buckets/s23860/keys/jkl >> wynik6.txt
+7.
+curl -i -XGET  http://localhost:8098/buckets/s23860/keys/jkl >> wynik7.txt
+8.
+curl -i -XPOST -H "Content-Type: application/json" -d '{"test": false}' http://localhost:8098/buckets/s23860/keys/ >> wynik8.txt
+9.
+curl -i -XGET  http://localhost:8098/buckets/s23860/keys/HhumQt4PSXvpfjiaMQMMSSrJNcW >> wynik9.txt
+10.
+curl -i -XDELETE http://localhost:8098/buckets/s23860/keys/HhumQt4PSXvpfjiaMQMMSSrJNcW >> wynik10.txt

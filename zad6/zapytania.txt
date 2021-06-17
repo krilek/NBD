@@ -1,0 +1,16 @@
+1.
+MATCH path = allShortestPaths(({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"})) RETURN path
+2.
+MATCH path = allShortestPaths(({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"})) WHERE ALL (r IN relationships(path) WHERE r.winter = "true") RETURN path
+3.
+MATCH path = ({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"}) RETURN path, length(path) ORDER BY length(path)
+4.
+MATCH (f:Flight)-[:ORIGIN]->(a:Airport) RETURN a,COUNT(f) AS amounts ORDER BY amounts DESC
+
+Zapytanie pomocnicze:
+MATCH (x)<-[:ORIGIN]-(f)-[:DESTINATION]->(y:Airport)
+MATCH (f) <-- (t:Ticket) 
+WITH x, y, min(t.price) AS lowest, id(f) AS fId
+MERGE (x)-[:FLIGHT{price:lowest, flightId: fId}]->(y)
+5.
+

@@ -7,10 +7,3 @@ MATCH path = ({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"}) RETURN path, le
 4.
 MATCH (f:Flight)-[:ORIGIN]->(a:Airport) RETURN a,COUNT(f) AS amounts ORDER BY amounts DESC
 
-Zapytanie pomocnicze:
-MATCH (x)<-[:ORIGIN]-(f)-[:DESTINATION]->(y:Airport)
-MATCH (f) <-- (t:Ticket) 
-WITH x, y, min(t.price) AS lowest, id(f) AS fId
-MERGE (x)-[:FLIGHT{price:lowest, flightId: fId}]->(y)
-5.
-
